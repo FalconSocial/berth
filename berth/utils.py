@@ -1,6 +1,8 @@
 """A collection of utility functions."""
 
 import click
+from docker.client import Client
+from docker.utils import kwargs_from_env
 
 _LOG_LEVEL = 0
 LOG_PREFIXES = {
@@ -8,6 +10,7 @@ LOG_PREFIXES = {
     1: click.style('>>', fg='cyan', bold=True),
     2: click.style('>>>', fg='blue', bold=True),
 }
+_DOCKER_CLIENT = None
 
 
 def set_log_level(log_level):
@@ -53,3 +56,16 @@ def info(message, prefix=True, **kwargs):
 def debug(message, prefix=True, **kwargs):
     """Print a debug level log message."""
     return _print(message, log_level=2, prefix=prefix, **kwargs)
+
+
+def docker_client():
+    """Create a Docker client instance or return an existing one."""
+    global _DOCKER_CLIENT  # pylint: disable = global-statement
+
+    if _DOCKER_CLIENT:
+        debug('Reusing existing Docker client.')
+        return _DOCKER_CLIENT
+    else:
+        debug('Creating Docker client.')
+        _DOCKER_CLIENT = Client(**kwargs_from_env())
+        return _DOCKER_CLIENT
