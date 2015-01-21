@@ -1,0 +1,28 @@
+- repo: git://github.com/pre-commit/pre-commit-hooks
+  sha: 375913d017a81a5c99ebdae4408cb0d8da11ab24
+  hooks:
+  - id: check-yaml
+  - id: end-of-file-fixer
+  - id: flake8
+    args:
+    - --ignore=E501
+  - id: requirements-txt-fixer
+  - id: trailing-whitespace
+
+- repo: git://github.com/pre-commit/mirrors-pylint
+  sha: v1.3.1
+  hooks:
+  - id: pylint
+    args:
+    - --disable line-too-long
+    - --disable import-error
+
+- repo: git://github.com/FalconSocial/pre-commit-python-sorter
+  sha: 1.0.1
+  hooks:
+  - id: python-import-sorter
+
+- repo: git://github.com/FalconSocial/pre-commit-mirrors-pep257
+  sha: v0.3.2
+  hooks:
+  - id: pep257
