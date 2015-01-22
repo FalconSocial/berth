@@ -1,5 +1,7 @@
 """Verifies the configuration provided."""
 
+from os import path
+
 import berth.utils as utils
 import yaml
 import yaml.parser
@@ -50,6 +52,13 @@ def verify(config):
             for field in fields:
                 if not config[section].get(field):
                     errors.append('"{}" is required in the {} section.'.format(field, section))
+
+    for section in required.keys():
+        for local_path, container_path in config.get(section, dict()).get('volumes', dict()).items():
+            if not path.exists(local_path):
+                errors.append('The path "{}" specified as a {} volume does not exist on the local machine.'.format(local_path, section))
+            if not path.isabs(container_path):
+                errors.append('The path "{}" specified as a {} volume has to be absolute.'.format(container_path, section))
 
     if errors:
         utils.log('The following errors were encountered while verifying the configuration:', err=True, fg='red', bold=True)
