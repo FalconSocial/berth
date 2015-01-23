@@ -9,7 +9,7 @@ import yaml.parser
 
 def read(file_pointer):
     """Read the configuration file and parse the YAML contents."""
-    utils.info('Reading the configuration file "{}"'.format(file_pointer.name))
+    utils.debug('Reading the configuration file.')
 
     try:
         config = yaml.load(file_pointer.read())
@@ -21,7 +21,8 @@ def read(file_pointer):
         utils.log(str(error.problem_mark), err=True, prefix=False)
         return False
 
-    utils.debug('Configuration parsed, contents:\n{}'.format(config))
+    utils.info('The configuration file "{}" has been parsed.'.format(file_pointer.name))
+    utils.debug('Parsed configuration:\n{}'.format(config))
     return config
 
 
