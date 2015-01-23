@@ -16,7 +16,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'berth = berth.cli:cli',
+            'berth = berth.cli:main',
         ]
     }
 )

@@ -7,10 +7,12 @@ import click
 
 
 @click.command(help='Berth use Docker containers to build packages for you, based on a YAML configuration file.')
+@click.pass_context
+@click.version_option(prog_name='Berth')
 @click.argument('config_file', metavar='<CONFIG FILE>', type=click.File())
 @click.option('-v', '--verbose', is_flag=True, help='Turn on verbose output.')
 @click.option('-d', '--debug', is_flag=True, help='Turn on debug output.')
-def main(config_file, verbose, debug):
+def main(context, config_file, verbose, debug):
     """Build a package."""
     if debug:
         utils.set_log_level(2)
@@ -20,12 +22,17 @@ def main(config_file, verbose, debug):
     configuration = config.read(config_file)
 
     if not configuration:
-        return
+        context.exit(1)
 
     if not config.verify(configuration):
-        return
+        context.exit(1)
+
+    if not utils.pull_image(configuration['build']['image']) and \
+       not utils.pull_image(configuration['package'].get('image', 'dockerfile/fpm')):
+        context.exit(1)
 
     build.build(configuration)
+    context.exit(0)
 
 
 if __name__ == '__main__':
