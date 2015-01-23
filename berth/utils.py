@@ -1,5 +1,8 @@
 """A collection of utility functions."""
 
+import json
+from os import path
+
 import click
 from docker.client import Client
 from docker.utils import kwargs_from_env
@@ -67,3 +70,39 @@ def docker_client():
     else:
         _DOCKER_CLIENT = Client(**kwargs_from_env())
         return _DOCKER_CLIENT
+
+
+def pull_image(wanted_image):
+    """Download Docker image if it isn't already local."""
+    if ':' not in wanted_image:
+        wanted_image = '{}:latest'.format(wanted_image)
+
+    debug('Checking if "{}" is among the local images in Docker.'.format(wanted_image))
+    for image in docker_client().images(name=wanted_image.split(':')[0]):
+        if wanted_image in image['RepoTags']:
+            info('Docker image found.')
+            return True
+
+    log('The Docker image "{}" was not found locally, pulling it: '.format(wanted_image), nl=False)
+    for data in docker_client().pull(wanted_image, stream=True):
+        data = data.decode('utf-8')
+        line = json.loads(data)
+        if not line.get('error'):
+            continue
+
+        log('Failed! Error message follows:', fg='red', bold=True, prefix=False)
+        log('  {}'.format(line['error']), err=True, prefix=False)
+        return False
+
+    log('Done.', fg='green', prefix=False)
+    return True
+
+
+def convert_volumes_list(volumes):
+    """Turn a dict into a list of volumes and binds in the format Docker loves."""
+    volume_list = []
+    binds = dict()
+    for local, container in volumes.items():
+        volume_list.append(container)
+        binds[path.abspath(local)] = container
+    return volume_list, binds
