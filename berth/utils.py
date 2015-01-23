@@ -63,9 +63,7 @@ def docker_client():
     global _DOCKER_CLIENT  # pylint: disable = global-statement
 
     if _DOCKER_CLIENT:
-        debug('Reusing existing Docker client.')
         return _DOCKER_CLIENT
     else:
-        debug('Creating Docker client.')
         _DOCKER_CLIENT = Client(**kwargs_from_env())
         return _DOCKER_CLIENT
