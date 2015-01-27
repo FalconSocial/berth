@@ -1,24 +1,29 @@
-metadata:
-  name: sample-package
-  description: Example of a package description
-  url: https://github.com/FalconSocial/berth
-  maintainer: Falcon Social
-
 build:
   image: busybox
   volumes:
-    .: /src
+    .: /data
   script: |
     #!/bin/sh
 
-    touch /src/build-file
+    touch /data/build-file
     echo "Hello, containerized World!"
     echo "Error, from the container!" >&2
 
 package:
-  version: 1.0.0
-  iteration: 1
-  architecture: amd64
-  output: output/
-  files:
-    build-file: /build-file
+  image: dockerfile/fpm
+  volumes:
+    .: /data
+
+  fpm:
+    s: dir
+    t: deb
+    name: sample-package
+    description: Example of a package description
+    url: https://github.com/FalconSocial/berth
+    maintainer: Falcon Social
+    version: 1.0.0
+    iteration: 1
+    architecture: amd64
+    package: output/
+    _arguments:
+      build-file: /build-file

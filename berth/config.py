@@ -31,18 +31,13 @@ def verify(config):
     errors = []
 
     required = {
-        'metadata': {
-            'name',
-        },
         'build': {
             'image',
             'script',
         },
         'package': {
-            'version',
-            'iteration',
-            'output',
-            'files',
+            'volumes',
+            'fpm',
         },
     }
 
