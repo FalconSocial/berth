@@ -57,6 +57,8 @@ def build(config):
 
     remove_build_script(script_path)
 
+    return True
+
 
 def create_build_script(script):
     """Write the build script to a temporary file."""
