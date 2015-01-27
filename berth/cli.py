@@ -31,7 +31,9 @@ def main(context, config_file, verbose, debug):
        not utils.pull_image(configuration['package'].get('image', 'dockerfile/fpm')):
         context.exit(1)
 
-    build.build(configuration)
+    if not build.build(configuration):
+        context.exit(1)
+
     context.exit(0)
 
 
