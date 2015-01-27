@@ -1,4 +1,4 @@
-"""Handles everything related to Docker and the actual build process."""
+"""Handles everything related to the actual build process."""
 
 import time
 from os import chmod, path, unlink
