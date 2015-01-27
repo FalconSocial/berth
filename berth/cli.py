@@ -27,7 +27,7 @@ def main(context, config_file, verbose, debug):
     if not config.verify(configuration):
         context.exit(1)
 
-    if not utils.pull_image(configuration['build']['image']) and \
+    if not utils.pull_image(configuration['build']['image']) or \
        not utils.pull_image(configuration['package'].get('image', 'dockerfile/fpm')):
         context.exit(1)
 
