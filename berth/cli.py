@@ -2,6 +2,7 @@
 
 import berth.build as build
 import berth.config as config
+import berth.package as package
 import berth.utils as utils
 import click
 
@@ -34,6 +35,10 @@ def main(context, config_file, verbose, debug):
     if not build.build(configuration):
         context.exit(1)
 
+    if not package.package(configuration):
+        context.exit(1)
+
+    utils.log('Done!')
     context.exit(0)
 
 
