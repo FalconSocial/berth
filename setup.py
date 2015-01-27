@@ -11,6 +11,7 @@ setup(
     license='MIT',
     packages=['berth'],
     install_requires=[
+        'click',
         'docker-py',
         'PyYAML',
     ],
