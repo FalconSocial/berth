@@ -2,10 +2,17 @@
 
 from setuptools import setup
 
+LONG_DESCRIPTION = '''Berth is a tool to help you automate the building of packages for an array of operating system and package systems, while not putting a big load on the local dependencies where you build the packages.
+
+It does this by using a Docker container of your choice to build your project inside, and then use another container with the `FPM <https://github.com/jordansissel/fpm>`_ package creator inside to package up the project.
+
+Read more on `GitHub <https://github.com/FalconSocial/berth>`_.'''
+
 setup(
     name='berth',
     version='1.0.0',
     description='Utility to generate package files using Docker containers',
+    long_description=LONG_DESCRIPTION,
     author='Falcon Social',
     url='https://github.com/FalconSocial/berth',
     license='MIT',
