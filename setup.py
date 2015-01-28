@@ -19,5 +19,20 @@ setup(
         'console_scripts': [
             'berth = berth.cli:main',
         ]
-    }
+    },
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Topic :: System :: Archiving :: Packaging',
+        'Topic :: System :: Software Distribution',
+        'Topic :: Utilities',
+    ],
 )
