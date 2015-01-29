@@ -60,10 +60,7 @@ def map_to_fpm(config):
     arguments = []
 
     for key, value in config.items():
-        if len(key) == 1:
-            param = '-{}'.format(key)
-        else:
-            param = '--{}'.format(key)
+        param = create_parameter(key)
 
         if value is True:
             yield param
@@ -102,3 +99,11 @@ def map_to_fpm(config):
 
     for argument in arguments:
         yield argument
+
+
+def create_parameter(key):
+    """Make a command line parameter out of a key in a YAML file."""
+    if len(key) == 1:
+        return '-{}'.format(key)
+    else:
+        return '--{}'.format(key)
