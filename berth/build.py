@@ -57,7 +57,7 @@ def build(config):
 
     remove_build_script(script_path)
 
-    return True
+    return exit_code == 0
 
 
 def create_build_script(script):

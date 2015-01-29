@@ -51,7 +51,7 @@ def package(config):
     docker.remove_container(container['Id'])
     utils.info('Removed packaging container.')
 
-    return True
+    return exit_code == 0
 
 
 def map_to_fpm(config):
