@@ -10,7 +10,7 @@ Read more on `GitHub <https://github.com/FalconSocial/berth>`_.'''
 
 setup(
     name='berth',
-    version='1.0.0',
+    version='1.0.1',
     description='Utility to generate package files using Docker containers',
     long_description=LONG_DESCRIPTION,
     author='Falcon Social',
