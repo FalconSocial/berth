@@ -63,7 +63,7 @@ def build(config):
 def create_build_script(script):
     """Write the build script to a temporary file."""
     utils.debug('Writing build script to temporary file.')
-    with NamedTemporaryFile(prefix='berth-build-', suffix='.sh', delete=False) as script_file:
+    with NamedTemporaryFile(prefix='berth-build-', suffix='.sh', delete=False, dir='.') as script_file:
         script_file.write(script.encode('utf-8'))
         script_path = script_file.name
     chmod(script_path, 493)  # Add execute permissions: 493 = rwxr-xr-x
