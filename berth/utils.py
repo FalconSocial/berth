@@ -68,7 +68,8 @@ def docker_client():
     if _DOCKER_CLIENT:
         return _DOCKER_CLIENT
     else:
-        _DOCKER_CLIENT = Client(**kwargs_from_env())
+        # assert_hostname=False is required when using boot2docker, it's taken as a hint from Fig: https://github.com/docker/fig/blob/master/compose/cli/docker_client.py#L29
+        _DOCKER_CLIENT = Client(**kwargs_from_env(assert_hostname=False))
         return _DOCKER_CLIENT
 
 
