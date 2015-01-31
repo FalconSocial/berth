@@ -23,6 +23,7 @@ def build(config):
         image=config['build']['image'],
         command=[script_container_path],
         volumes=volume_list,
+        environment={str(k): str(v) for k, v in config['build'].get('environment', {}).items()},
     )
 
     if container['Warnings']:

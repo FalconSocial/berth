@@ -1,5 +1,7 @@
 """Handles the interface for working with FPM and package generation."""
 
+import os
+import os.path
 import time
 
 import berth.utils as utils
@@ -12,7 +14,7 @@ def package(config):
     volumes = config['package'].get('volumes', dict())
     volume_list, binds = utils.convert_volumes_list(volumes)
 
-    command = list(map_to_fpm(config['package']['fpm']))
+    command = list(replace_envvars(config, map_to_fpm(config['package']['fpm'])))
     utils.debug('Command to be run in packaging container is: {}'.format(str(command)))
 
     docker = utils.docker_client()
@@ -107,3 +109,21 @@ def create_parameter(key):
         return '-{}'.format(key)
     else:
         return '--{}'.format(key)
+
+
+def replace_envvars(config, lines):
+    """Replace environment variables in FPM command parameters."""
+    environment_variables = config['build'].get('environment', {})
+
+    if not environment_variables:
+        utils.debug('No environment variables has been specified for the packaging. No replacements are being performed.')
+
+        for line in lines:
+            yield line
+
+    else:
+        utils.debug('The following environment variables has been provided: {}'.format(str(environment_variables)))
+        os.environ.update({str(k): str(v) for k, v in environment_variables.items()})
+
+        for line in lines:
+            yield os.path.expandvars(line)
