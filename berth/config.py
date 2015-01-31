@@ -1,6 +1,6 @@
 """Verifies the configuration provided."""
 
-from os import path
+from os import mkdir, path
 
 import berth.utils as utils
 import yaml
@@ -51,7 +51,7 @@ def verify(config):
 
     for section in required.keys():
         for local_path, container_path in config.get(section, dict()).get('volumes', dict()).items():
-            if not path.exists(local_path):
+            if not path.exists(local_path) and not create_local_directory(local_path):
                 errors.append('The path "{}" specified as a {} volume does not exist on the local machine.'.format(local_path, section))
             if not path.isabs(container_path):
                 errors.append('The path "{}" specified as a {} volume has to be absolute.'.format(container_path, section))
@@ -64,3 +64,14 @@ def verify(config):
     else:
         utils.info('The configuration has been verified without errors.')
         return True
+
+
+def create_local_directory(local_path):
+    """Create a local directory for a specified path that doesn't exist."""
+    try:
+        utils.debug('Creating a directory at the local path "{}".'.format(local_path))
+        mkdir(local_path)
+        utils.info('Created directory at "{}" as the path did not exist.'.format(local_path))
+        return True
+    except PermissionError:
+        return False
