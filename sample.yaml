@@ -27,6 +27,6 @@ package:
     version: $VERSION
     iteration: 1
     architecture: amd64
-    package: output/
+    package: sample-package_${VERSION}.deb
     _arguments:
       build-file-v${VERSION}: /build-file
