@@ -56,6 +56,9 @@ def verify(config):
             if not path.isabs(container_path):
                 errors.append('The path "{}" specified as a {} volume has to be absolute.'.format(container_path, section))
 
+    if not isinstance(config.get('environment', dict()), dict):
+        errors.append('The environment variables should be described as a dictionary.')
+
     if errors:
         utils.log('The following errors were encountered while verifying the configuration:', err=True, fg='red', bold=True)
         for error in errors:

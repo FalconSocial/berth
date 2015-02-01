@@ -113,7 +113,7 @@ def create_parameter(key):
 
 def replace_envvars(config, lines):
     """Replace environment variables in FPM command parameters."""
-    environment_variables = config['build'].get('environment', {})
+    environment_variables = config.get('environment', dict())
 
     if not environment_variables:
         utils.debug('No environment variables has been specified for the packaging. No replacements are being performed.')
