@@ -6,7 +6,7 @@ build:
   volumes:
     .: /data
   script: |
-    #!/bin/sh
+    #!/bin/sh -ex
 
     touch /data/build-file-v${VERSION}
     echo "Hello, containerized World!"
