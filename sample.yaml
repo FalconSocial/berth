@@ -1,3 +1,6 @@
+environment:
+  VERSION: 1.0.0
+
 build:
   image: busybox
   volumes:
@@ -5,7 +8,7 @@ build:
   script: |
     #!/bin/sh
 
-    touch /data/build-file
+    touch /data/build-file-v${VERSION}
     echo "Hello, containerized World!"
     echo "Error, from the container!" >&2
 
@@ -21,9 +24,9 @@ package:
     description: Example of a package description
     url: https://github.com/FalconSocial/berth
     maintainer: Falcon Social
-    version: 1.0.0
+    version: $VERSION
     iteration: 1
     architecture: amd64
     package: output/
     _arguments:
-      build-file: /build-file
+      build-file-v${VERSION}: /build-file

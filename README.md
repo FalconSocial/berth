@@ -30,11 +30,14 @@ When those requirements are in place, you can install Berth through `pip` with:
 
 There's not much to specify on the command line, except for output level and a configuration file. The configuration file is in YAML format and will look something like the [sample.yaml](sample.yaml) file.
 
-It has two sections of the file, the first is the `build` section, where you specify everything related to building the project. You can choose the Docker image you would like to do the build in, so if you ie. want to build a Go project, you can use the `golang` image and have any dependencies available you would need. You also specify the which volumes you would like to have mapped into the container, this can be used both for getting source files into the container but also to get built files out of it. Lastly you should specify a script to use for the build process. It will be executed with `/tmp/build-script`, meaning that it should contain an interpreter as the first line.
 
-The second section of the configuration file covers the packaging of the project. You can again specify which image you want to build with and which volumes you need to get mapped into the container, the only requirement to the image is that it has `fpm` in `$PATH`.
+## Configuration
 
-The remainder of the `package` section is used to specify the options you want to pass to `fpm` for when it builds the package. The options will more or less be mapped directly into `fpm`, with a few exceptions:
+The configuration file has three possible sections, the first is the `environment` section where you can specify environment variables that will made available to the rest of this configuration. This means you only have to specify metadata once, ie. the version of the package you are building.
+
+Next up is the `build` section, where you specify everything related to building the project. You can choose the Docker image you would like to do the build in, so if you ie. want to build a Go project, you can use the `golang` image and have any dependencies available you would need. You also specify the which volumes you would like to have mapped into the container, this can be used both for getting source files into the container but also to get built files out of it. Lastly you should specify a script to use for the build process. It will be executed as `/build-script`, meaning that it should contain an interpreter as the first line.
+
+The last section of the configuration file is `package` which covers the packaging of the project. You can again specify which image you want to build with and which volumes you need to get mapped into the container, the only requirement to the image is that it has `fpm` in `$PATH`. The remainder of the `package` section is used to specify the options you want to pass to `fpm` for when it builds the package. The options will more or less be mapped directly into `fpm`, with a few exceptions:
 
 - If the value is a boolean true to YAML, the key will be passed as a flag
 - If the value is a list, the parameter will be passed multiple times, once for each item in the list
