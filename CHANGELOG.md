@@ -1,5 +1,10 @@
 # Berth Changelog
 
+## 1.1.0 - 2015-02-01
+* Enable the use of environment variables during build and packaging steps. This makes it easier to create an updated package by just increasing the version number one place.
+* When a local path specified as a source for a volume doesn't exist, we now try to create a directory at that path and make use of that. If the directory creation fails then we complain like before.
+* Minor improvements to configuration file checks.
+
 ## 1.0.1 - 2015-01-29
 * Stop the package generation flow if the build script fails (exits with non-zero exit code)
 * Disable hostname verification for Docker client, since the hostname and certificate doesn't match when using boot2docker - Fig does this as well
