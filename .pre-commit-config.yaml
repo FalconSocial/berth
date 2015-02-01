@@ -16,6 +16,7 @@
     args:
     - --disable line-too-long
     - --disable import-error
+    - --disable too-many-branches
 
 - repo: git://github.com/FalconSocial/pre-commit-python-sorter
   sha: 1.0.1

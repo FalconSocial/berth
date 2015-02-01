@@ -56,7 +56,7 @@ def package(config):
     return exit_code == 0
 
 
-def map_to_fpm(config):  # pylint: disable = too-many-branches
+def map_to_fpm(config):
     """Map settings in the YAML file to a FPM command."""
     yield 'fpm'
     arguments = []
