@@ -42,21 +42,24 @@ def verify(config):
     }
 
     for section, fields in required.items():
-        if not config.get(section):
+        if section not in config:
             errors.append('A "{}" section is missing.'.format(section))
+        elif not isinstance(config[section], dict):
+            errors.append('The "{}" section has to be a dictionary.'.format(section))
         else:
             for field in fields:
-                if not config[section].get(field):
+                if field not in config[section]:
                     errors.append('"{}" is required in the {} section.'.format(field, section))
 
-    for section in required.keys():
-        for local_path, container_path in config.get(section, dict()).get('volumes', dict()).items():
-            if not path.exists(local_path) and not create_local_directory(local_path):
-                errors.append('The path "{}" specified as a {} volume does not exist on the local machine.'.format(local_path, section))
-            if not path.isabs(container_path):
-                errors.append('The path "{}" specified as a {} volume has to be absolute.'.format(container_path, section))
+    if not errors:
+        for section in required.keys():
+            for local_path, container_path in config.get(section, dict()).get('volumes', dict()).items():
+                if not path.exists(local_path) and not create_local_directory(local_path):
+                    errors.append('The path "{}" specified as a {} volume does not exist on the local machine.'.format(local_path, section))
+                if not path.isabs(container_path):
+                    errors.append('The path "{}" specified as a {} volume has to be absolute.'.format(container_path, section))
 
-    if not isinstance(config.get('environment', dict()), dict):
+    if 'environment' in config and not isinstance(config['environment'], dict):
         errors.append('The environment variables should be described as a dictionary.')
 
     if errors:
