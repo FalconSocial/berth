@@ -1,5 +1,8 @@
 # Berth Changelog
 
+## 1.2.0 - 2015-02-12
+* Made the "build" part of the configuration optional so you also can use Berth to just build Python and Ruby packages directly, since FPM supports that as input.
+
 ## 1.1.0 - 2015-02-01
 * Enable the use of environment variables during build and packaging steps. This makes it easier to create an updated package by just increasing the version number one place.
 * When a local path specified as a source for a volume doesn't exist, we now try to create a directory at that path and make use of that. If the directory creation fails then we complain like before.
