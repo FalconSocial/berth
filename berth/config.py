@@ -30,34 +30,21 @@ def verify(config):
     """Verify the configuration contain the necessary details."""
     errors = []
 
-    required = {
-        'build': {
-            'image',
-            'script',
-        },
-        'package': {
-            'volumes',
-            'fpm',
-        },
-    }
+    if 'build' in config:
+        for error in verify_build(config['build']):
+            errors.append(error)
+    else:
+        utils.debug('No "build" section found in configuration.')
 
-    for section, fields in required.items():
-        if section not in config:
-            errors.append('A "{}" section is missing.'.format(section))
-        elif not isinstance(config[section], dict):
-            errors.append('The "{}" section has to be a dictionary.'.format(section))
-        else:
-            for field in fields:
-                if field not in config[section]:
-                    errors.append('"{}" is required in the {} section.'.format(field, section))
+    for error in verify_package(config):
+        errors.append(error)
 
-    if not errors:
-        for section in required.keys():
-            for local_path, container_path in config.get(section, dict()).get('volumes', dict()).items():
-                if not path.exists(local_path) and not create_local_directory(local_path):
-                    errors.append('The path "{}" specified as a {} volume does not exist on the local machine.'.format(local_path, section))
-                if not path.isabs(container_path):
-                    errors.append('The path "{}" specified as a {} volume has to be absolute.'.format(container_path, section))
+    for section in {'build', 'package'}:
+        for local_path, container_path in config.get(section, dict()).get('volumes', dict()).items():
+            if not path.exists(local_path) and not create_local_directory(local_path):
+                errors.append('The path "{}" specified as a {} volume does not exist on the local machine.'.format(local_path, section))
+            if not path.isabs(container_path):
+                errors.append('The path "{}" specified as a {} volume has to be absolute.'.format(container_path, section))
 
     if 'environment' in config and not isinstance(config['environment'], dict):
         errors.append('The environment variables should be described as a dictionary.')
@@ -70,6 +57,38 @@ def verify(config):
     else:
         utils.info('The configuration has been verified without errors.')
         return True
+
+
+def verify_build(build):
+    """Verify the build section of the configuration file."""
+    if not isinstance(build, dict):
+        yield 'The "build" section has to be a dictionary.'
+        return
+
+    if 'image' not in build:
+        yield '"image" is required in the build section.'
+
+    if 'script' not in build:
+        yield '"script" is required in the build section.'
+
+
+def verify_package(config):
+    """Verify the package section of the configuration file."""
+    if 'package' not in config:
+        yield 'The "package" section is missing.'
+        return
+
+    package = config['package']
+
+    if not isinstance(package, dict):
+        yield 'The "package" section has to be a dictionary.'
+        return
+
+    if 'volumes' not in package:
+        yield '"volumes" is required in the package section.'
+
+    if 'fpm' not in package:
+        yield '"fpm" is required in the package section.'
 
 
 def create_local_directory(local_path):

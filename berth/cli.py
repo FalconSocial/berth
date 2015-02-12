@@ -28,11 +28,14 @@ def main(context, config_file, verbose, debug):
     if not config.verify(configuration):
         context.exit(1)
 
-    if not utils.pull_image(configuration['build']['image']) or \
-       not utils.pull_image(configuration['package'].get('image', 'dockerfile/fpm')):
-        context.exit(1)
+    if 'build' in configuration:
+        if not utils.pull_image(configuration['build']['image']):
+            context.exit(1)
 
-    if not build.build(configuration):
+        if not build.build(configuration):
+            context.exit(1)
+
+    if not utils.pull_image(configuration['package'].get('image', 'dockerfile/fpm')):
         context.exit(1)
 
     if not package.package(configuration):
