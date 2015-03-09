@@ -38,7 +38,7 @@ def build(config):
     utils.info('Build container started.')
 
     exit_code = docker.wait(container['Id'])
-    utils.info('The build container has stopped after {:.3} seconds.'.format(time.time() - start_time))
+    utils.info('The build container has stopped after {:.1f} seconds.'.format(time.time() - start_time))
 
     if exit_code != 0 or utils.get_log_level() > 0:
         utils.debug('Getting output from container.')
