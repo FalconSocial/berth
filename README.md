@@ -23,10 +23,13 @@ When those requirements are in place, you can install Berth through `pip` with:
       configuration file.
 
     Options:
-      --version      Show the version and exit.
-      -v, --verbose  Turn on verbose output.
-      -d, --debug    Turn on debug output.
-      --help         Show this message and exit.
+      --version              Show the version and exit.
+      -v, --verbose          Turn on verbose output.
+      -d, --debug            Turn on debug output.
+      -b, --build-only       Only perform the build step.
+      -p, --package-only     Only perform the package step.
+      -k, --keep-containers  Keep the containers around after they have been used.
+      --help                 Show this message and exit.
 
 There's not much to specify on the command line, except for output level and a configuration file. The configuration file is in YAML format and will look something like the [sample.yaml](sample.yaml) file.
 
