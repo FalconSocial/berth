@@ -15,7 +15,8 @@ import click
 @click.option('-d', '--debug', is_flag=True, help='Turn on debug output.')
 @click.option('-b', '--build-only', is_flag=True, help='Only perform the build step.')
 @click.option('-p', '--package-only', is_flag=True, help='Only perform the package step.')
-def main(context, config_file, verbose, debug, build_only, package_only):  # pylint: disable = too-many-arguments
+@click.option('-k', '--keep-containers', is_flag=True, help='Keep the containers around after they have been used.')
+def main(context, config_file, verbose, debug, build_only, package_only, keep_containers):  # pylint: disable = too-many-arguments
     """Build a package."""
     if debug:
         utils.set_log_level(2)
@@ -33,6 +34,8 @@ def main(context, config_file, verbose, debug, build_only, package_only):  # pyl
 
     if not config.verify(configuration):
         context.exit(1)
+
+    configuration['keep_containers'] = keep_containers
 
     if 'build' not in configuration:
         utils.info('No build configuration provided, skipping build.')

@@ -52,9 +52,12 @@ def build(config):
     else:
         utils.log('Build succeeded.')
 
-    utils.debug('Removing build container.')
-    docker.remove_container(container['Id'])
-    utils.info('Removed build container.')
+    if config['keep_containers']:
+        utils.info('Keeping build container (ID: {}).'.format(container['Id'][:12]))
+    else:
+        utils.debug('Removing build container.')
+        docker.remove_container(container['Id'])
+        utils.info('Removed build container.')
 
     remove_build_script(script_path)
 

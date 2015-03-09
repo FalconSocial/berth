@@ -49,9 +49,12 @@ def package(config):
     else:
         utils.log('Packaging succeeded.')
 
-    utils.debug('Removing packaging container.')
-    docker.remove_container(container['Id'])
-    utils.info('Removed packaging container.')
+    if config['keep_containers']:
+        utils.info('Keeping packaging container (ID: {}).'.format(container['Id'][:12]))
+    else:
+        utils.debug('Removing packaging container.')
+        docker.remove_container(container['Id'])
+        utils.info('Removed packaging container.')
 
     return exit_code == 0
 
