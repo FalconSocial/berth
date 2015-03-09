@@ -1,5 +1,5 @@
 - repo: git://github.com/pre-commit/pre-commit-hooks
-  sha: 375913d017a81a5c99ebdae4408cb0d8da11ab24
+  sha: 9ce45609a92f648c87b42207410386fd69a5d1e5
   hooks:
   - id: check-yaml
   - id: end-of-file-fixer
@@ -14,9 +14,9 @@
   hooks:
   - id: pylint
     args:
-    - --disable line-too-long
-    - --disable import-error
-    - --disable too-many-branches
+    - --disable=line-too-long
+    - --disable=import-error
+    - --disable=too-many-branches
 
 - repo: git://github.com/FalconSocial/pre-commit-python-sorter
   sha: 1.0.1
