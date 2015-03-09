@@ -34,20 +34,21 @@ def package(config):
     docker.start(container['Id'], binds=binds)
     utils.info('Packaging container started.')
 
+    if utils.get_log_level() > 0:
+        for line in docker.logs(container['Id'], stream=True):
+            utils.log(line.decode('utf-8').rstrip(), prefix=False)
+
     exit_code = docker.wait(container['Id'])
     utils.info('The packaging container has stopped after {:.1f} seconds.'.format(time.time() - start_time))
 
-    if exit_code != 0 or utils.get_log_level() > 0:
-        utils.debug('Getting output from container.')
-        logs = docker.logs(container['Id']).decode('utf-8').rstrip()
-
-        if exit_code != 0:
-            utils.log('Packaging command failed with exit code: {}. Output follows:'.format(exit_code), err=True, fg='red', bold=True)
-        else:
-            utils.info('Packaging command output follows:')
-        utils.log(logs, err=(exit_code != 0), prefix=False)
-    else:
+    if exit_code == 0:
         utils.log('Packaging succeeded.')
+    else:
+        if utils.get_log_level() > 0:
+            utils.log('Packaging command failed with exit code: {}.'.format(exit_code), err=True, fg='red', bold=True)
+        else:
+            utils.log('Packaging command failed with exit code: {}. Output follows:'.format(exit_code), err=True, fg='red', bold=True)
+            utils.log(docker.logs(container['Id']).decode('utf-8').rstrip(), err=True, prefix=False)
 
     if config['keep_containers']:
         utils.info('Keeping packaging container (ID: {}).'.format(container['Id'][:12]))
