@@ -8,6 +8,10 @@ It does this by using a Docker container of your choice to build your project in
 
 Read more on `GitHub <https://github.com/FalconSocial/berth>`_.'''
 
+with open('CHANGELOG.md') as changelog:
+    LONG_DESCRIPTION += '\n\n'
+    LONG_DESCRIPTION += changelog.read()
+
 setup(
     name='berth',
     version='1.3.0',
