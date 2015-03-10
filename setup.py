@@ -23,7 +23,7 @@ setup(
     packages=['berth'],
     install_requires=[
         'click >= 3, < 4',
-        'docker-py >= 0.7, < 0.8',
+        'docker-py >= 1, < 2',
         'PyYAML >= 3, < 4',
     ],
     entry_points={
