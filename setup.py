@@ -22,7 +22,7 @@ setup(
     license='MIT',
     packages=['berth'],
     install_requires=[
-        'click >= 3, < 4',
+        'click >= 4, < 5',
         'docker-py >= 1, < 2',
         'PyYAML >= 3, < 4',
     ],
