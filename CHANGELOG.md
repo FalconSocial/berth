@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3.1 - 2015-04-27
+------------------
+* Bumped dependencies on the docker-py and click libraries.
+* Replaced ``dockerfiles/fpm`` with ``tenzer/fpm`` as the default image to use for packaging as the dockerfiles image no longer exists.
+
 1.3.0 - 2015-03-09
 ------------------
 * Added ``--build-only`` and ``--package-only`` flags to tell Berth to only do one of the two steps. This can be useful when setting up a configuration for a new package together with:
