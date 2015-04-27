@@ -48,7 +48,7 @@ def main(context, config_file, verbose, debug, build_only, package_only, keep_co
         if not build.build(configuration):
             context.exit(1)
 
-    if not utils.pull_image(configuration['package'].get('image', 'dockerfile/fpm')):
+    if not utils.pull_image(configuration['package'].get('image', 'tenzer/fpm')):
         context.exit(1)
 
     if build_only:

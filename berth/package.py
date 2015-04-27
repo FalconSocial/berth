@@ -19,7 +19,7 @@ def package(config):
 
     docker = utils.docker_client()
     container = docker.create_container(
-        image=config['package'].get('image', 'dockerfile/fpm'),
+        image=config['package'].get('image', 'tenzer/fpm'),
         command=command,
         volumes=volume_list,
     )

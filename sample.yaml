@@ -13,7 +13,7 @@ build:
     echo "Error, from the container!" >&2
 
 package:
-  image: dockerfile/fpm
+  image: tenzer/fpm
   volumes:
     .: /data
 
