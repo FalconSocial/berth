@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.3.2 - 2015-05-17
+------------------
+* Fixed packaging problem about missing CHANGELOG.md at installation time.
+
 1.3.1 - 2015-04-27
 ------------------
 * Bumped dependencies on the docker-py and click libraries.
