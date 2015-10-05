@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.3.3 - 2015-10-05
+------------------
+* Bumped dependencies on docker-py and click. The former has a bug in < 1.3.1 where the streaming output from a container can suddenly stop while the container keeps running.
+
+1.3.2 - 2015-05-17
+------------------
+* Fixed packaging problem about missing CHANGELOG.md at installation time.
+
 1.3.1 - 2015-04-27
 ------------------
 * Bumped dependencies on the docker-py and click libraries.
