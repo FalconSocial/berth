@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.3.4 - 2015-10-05
+------------------
+* Somehow the fix in 1.3.2 got lost, so we are adding that back in again.
+
 1.3.3 - 2015-10-05
 ------------------
 * Bumped dependencies on docker-py and click. The former has a bug in < 1.3.1 where the streaming output from a container can suddenly stop while the container keeps running.
