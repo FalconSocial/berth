@@ -12,7 +12,7 @@ def package(config):
     utils.log('Packaging project.')
 
     volumes = config['package'].get('volumes', dict())
-    volume_list, binds = utils.convert_volumes_list(volumes)
+    binds = utils.convert_volumes_list(volumes)
 
     command = list(replace_envvars(config, map_to_fpm(config['package']['fpm'])))
     utils.debug('Command to be run in packaging container is: {}'.format(str(command)))
@@ -21,7 +21,7 @@ def package(config):
     container = docker.create_container(
         image=config['package'].get('image', 'tenzer/fpm'),
         command=command,
-        volumes=volume_list,
+        host_config=docker.create_host_config(binds=binds)
     )
 
     if container['Warnings']:
@@ -31,7 +31,7 @@ def package(config):
 
     utils.debug('Starting packaging container.')
     start_time = time.time()
-    docker.start(container['Id'], binds=binds)
+    docker.start(container['Id'])
     utils.info('Packaging container started.')
 
     if utils.get_log_level() > 0:

@@ -16,14 +16,14 @@ def build(config):
 
     volumes = config['build'].get('volumes', dict())
     volumes[script_path] = script_container_path
-    volume_list, binds = utils.convert_volumes_list(volumes)
+    binds = utils.convert_volumes_list(volumes)
 
     docker = utils.docker_client()
     container = docker.create_container(
         image=config['build']['image'],
         command=[script_container_path],
-        volumes=volume_list,
         environment={str(k): str(v) for k, v in config.get('environment', dict()).items()},
+        host_config=docker.create_host_config(binds=binds)
     )
 
     if container['Warnings']:
@@ -34,7 +34,7 @@ def build(config):
 
     utils.debug('Starting build container.')
     start_time = time.time()
-    docker.start(container['Id'], binds=binds)
+    docker.start(container['Id'])
     utils.info('Build container started.')
 
     if utils.get_log_level() > 0:
