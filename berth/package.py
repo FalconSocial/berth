@@ -62,7 +62,6 @@ def package(config):
 
 def map_to_fpm(config):
     """Map settings in the YAML file to a FPM command."""
-    yield 'fpm'
     arguments = []
 
     for key, value in config.items():
