@@ -1,6 +1,10 @@
 Changelog
 =========
 
+DEV
+------------------
+* Updated to support newer versions of the Docker API
+
 1.3.4 - 2015-10-05
 ------------------
 * Somehow the fix in 1.3.2 got lost, so we are adding that back in again.
