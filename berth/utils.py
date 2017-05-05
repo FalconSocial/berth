@@ -100,10 +100,8 @@ def pull_image(wanted_image):
 
 
 def convert_volumes_list(volumes):
-    """Turn a dict into a list of volumes and binds in the format Docker loves."""
-    volume_list = []
+    """Turn a dict into a list of binds in the format Docker loves."""
     binds = dict()
     for local, container in volumes.items():
-        volume_list.append(container)
         binds[path.abspath(local)] = container
-    return volume_list, binds
+    return binds

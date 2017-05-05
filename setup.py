@@ -14,7 +14,7 @@ with open('CHANGELOG.md') as changelog:
 
 setup(
     name='berth',
-    version='1.3.4',
+    version='1.3.5',
     description='Utility to generate package files using Docker containers',
     long_description=LONG_DESCRIPTION,
     author='Falcon Social',
