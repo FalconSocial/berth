@@ -1,9 +1,10 @@
 Changelog
 =========
 
-DEV
+1.3.5 - 2017-05-05
 ------------------
-* Updated to support newer versions of the Docker API
+* Updated to support versions 1.24 of the Docker API.
+* Updated to work with new version of ``tenzer/fpm``.
 
 1.3.4 - 2015-10-05
 ------------------
